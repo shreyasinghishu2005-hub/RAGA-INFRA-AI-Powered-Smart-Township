@@ -6,7 +6,7 @@ Build the full-stack Next.js 14 application in phases, starting with the public 
 
 ## Tasks
 
-- [-] 1. Bootstrap Next.js project and configure tooling
+- [ ] 1. Bootstrap Next.js project and configure tooling
   - Initialize Next.js 14 app with App Router, TypeScript, TailwindCSS, and Shadcn UI in the workspace root
   - Install all dependencies: `next`, `react`, `typescript`, `tailwindcss`, `@clerk/nextjs`, `prisma`, `@prisma/client`, `framer-motion`, `recharts`, `leaflet`, `@types/leaflet`, `react-leaflet`, `zod`, `react-hook-form`, `@hookform/resolvers`, `openai`, `fast-check`, `vitest`, `@vitejs/plugin-react`, `@testing-library/react`
   - Configure `tailwind.config.ts`, `tsconfig.json`, `next.config.ts`
