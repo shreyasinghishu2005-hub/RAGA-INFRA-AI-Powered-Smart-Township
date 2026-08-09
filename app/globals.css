@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --navy: #0a0f2e;
+  --blue: #1a56db;
+  --cyan: #06b6d4;
+  --gold: #f59e0b;
+  --green: #10b981;
+}
+
+body {
+  background-color: var(--navy);
+  color: #f1f5f9;
+  font-family: Inter, sans-serif;
+}
+
+/* Glassmorphism card */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+}
+
+/* Neon glow utility */
+.glow-blue {
+  box-shadow: 0 0 20px rgba(26, 86, 219, 0.4);
+}
+.glow-green {
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+}
+.glow-gold {
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0a0f2e; }
+::-webkit-scrollbar-thumb { background: #1a56db; border-radius: 3px; }

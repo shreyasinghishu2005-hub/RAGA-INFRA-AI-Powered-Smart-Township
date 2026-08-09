@@ -1,0 +1,227 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  SUPER_ADMIN
+  TOWNSHIP_MANAGER
+  RESIDENT
+  VISITOR
+  COMPANY_ADMIN
+  HOSPITAL_ADMIN
+  SCHOOL_ADMIN
+  GOVERNMENT_OFFICER
+  MAINTENANCE_STAFF
+  SECURITY_OFFICER
+  EMERGENCY_TEAM
+}
+
+enum BookingType {
+  RESIDENTIAL
+  COMMERCIAL
+  MEETING_ROOM
+  PARKING
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+enum AlertType {
+  SENSOR_THRESHOLD
+  CONNECTIVITY_LOSS
+  SECURITY
+  HEALTH
+  MAINTENANCE
+  FLOOD
+  FIRE
+  GAS
+  EARTHQUAKE
+  POWER
+  WATER
+}
+
+enum Severity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum AlertStatus {
+  OPEN
+  ACKNOWLEDGED
+  RESOLVED
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+enum GovServiceType {
+  BIRTH_CERTIFICATE
+  PROPERTY_TAX
+  NOC
+  COMPLAINT
+  ANNOUNCEMENT
+}
+
+enum GovStatus {
+  RECEIVED
+  IN_PROGRESS
+  RESOLVED
+  ESCALATED
+}
+
+model User {
+  id          String   @id @default(cuid())
+  clerkId     String   @unique
+  email       String   @unique
+  name        String
+  role        Role     @default(RESIDENT)
+  phone       String?
+  unitNumber  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  enquiries        Enquiry[]
+  bookings         Booking[]
+  visitorPasses    VisitorPass[]     @relation("HostResident")
+  maintenanceReqs  MaintenanceTicket[]
+  alerts           Alert[]           @relation("AlertActor")
+  auditLogs        AuditLog[]
+  govServices      GovService[]
+  bills            Bill[]
+}
+
+model Enquiry {
+  id          String   @id @default(cuid())
+  name        String
+  email       String
+  phone       String
+  message     String
+  type        String
+  referenceNo String   @unique @default(cuid())
+  createdAt   DateTime @default(now())
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id])
+}
+
+model Booking {
+  id          String        @id @default(cuid())
+  type        BookingType
+  userId      String?
+  user        User?         @relation(fields: [userId], references: [id])
+  status      BookingStatus @default(PENDING)
+  referenceNo String        @unique @default(cuid())
+  details     Json
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model VisitorPass {
+  id           String   @id @default(cuid())
+  hostId       String
+  host         User     @relation("HostResident", fields: [hostId], references: [id])
+  visitorName  String
+  visitorEmail String
+  visitorPhone String
+  qrCode       String   @unique
+  validFrom    DateTime
+  validUntil   DateTime
+  used         Boolean  @default(false)
+  createdAt    DateTime @default(now())
+}
+
+model Alert {
+  id             String      @id @default(cuid())
+  type           AlertType
+  severity       Severity
+  title          String
+  description    String
+  zone           String?
+  deviceId       String?
+  status         AlertStatus @default(OPEN)
+  actorId        String?
+  actor          User?       @relation("AlertActor", fields: [actorId], references: [id])
+  acknowledgedAt DateTime?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+}
+
+model SensorReading {
+  id        String   @id @default(cuid())
+  deviceId  String
+  type      String
+  value     Float
+  unit      String
+  zone      String
+  status    String   @default("online")
+  timestamp DateTime @default(now())
+
+  @@index([deviceId, timestamp])
+}
+
+model MaintenanceTicket {
+  id          String       @id @default(cuid())
+  raisedById  String
+  raisedBy    User         @relation(fields: [raisedById], references: [id])
+  assignedTo  String?
+  title       String
+  description String
+  status      TicketStatus @default(OPEN)
+  referenceNo String       @unique @default(cuid())
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model Bill {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  month       Int
+  year        Int
+  electricity Float
+  water       Float
+  maintenance Float
+  totalAmount Float
+  paid        Boolean   @default(false)
+  paidAt      DateTime?
+  receiptId   String?
+  createdAt   DateTime  @default(now())
+}
+
+model GovService {
+  id        String         @id @default(cuid())
+  userId    String
+  user      User           @relation(fields: [userId], references: [id])
+  type      GovServiceType
+  ticketId  String         @unique @default(cuid())
+  status    GovStatus      @default(RECEIVED)
+  details   Json
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  action     String
+  recordId   String?
+  recordType String?
+  details    Json?
+  createdAt  DateTime @default(now())
+
+  @@index([userId, createdAt])
+}
