@@ -25,9 +25,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message });
   } catch (err) {
     console.error("AI chat error:", err);
-    // Return a fallback response if OpenAI fails
     return NextResponse.json({
-      message: "I'm the Raga Infra AI assistant. I can help you with information about our 300-acre smart township near Mahindra SEZ — residential units, commercial spaces, amenities, schools, hospitals, and more. What would you like to know?",
+      message: "I'm the Raga Infra AI assistant. Ask me anything about our 300-acre smart township near Mahindra SEZ — properties, amenities, schools, hospitals, and more.",
     });
   }
 }
