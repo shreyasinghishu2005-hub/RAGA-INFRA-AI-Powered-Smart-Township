@@ -1,39 +1,35 @@
 import { generateSensorSnapshot } from "@/lib/mock-iot";
 
 export const dynamic = "force-dynamic";
-export const runtime = "nodejs";
 
 export async function GET() {
   const encoder = new TextEncoder();
+  let interval: ReturnType<typeof setInterval>;
+  let timeout: ReturnType<typeof setTimeout>;
 
   const stream = new ReadableStream({
     start(controller) {
       const send = () => {
         try {
           const snapshot = generateSensorSnapshot();
-          const data = `data: ${JSON.stringify(snapshot)}\n\n`;
-          controller.enqueue(encoder.encode(data));
+          controller.enqueue(encoder.encode(`data: ${JSON.stringify(snapshot)}\n\n`));
         } catch {
-          controller.error("Stream error");
+          // ignore send errors
         }
       };
 
-      // Send initial snapshot immediately
       send();
+      interval = setInterval(send, 3000);
 
-      // Send updates every 3 seconds
-      const interval = setInterval(send, 3000);
-
-      // Clean up after 5 minutes to prevent runaway connections
-      const timeout = setTimeout(() => {
+      // Auto-close after 5 minutes to prevent runaway connections
+      timeout = setTimeout(() => {
         clearInterval(interval);
-        controller.close();
+        try { controller.close(); } catch { /* already closed */ }
       }, 5 * 60 * 1000);
-
-      return () => {
-        clearInterval(interval);
-        clearTimeout(timeout);
-      };
+    },
+    cancel() {
+      clearInterval(interval);
+      clearTimeout(timeout);
     },
   });
 
@@ -41,7 +37,7 @@ export async function GET() {
     headers: {
       "Content-Type": "text/event-stream",
       "Cache-Control": "no-cache",
-      Connection: "keep-alive",
+      "Connection": "keep-alive",
       "X-Accel-Buffering": "no",
     },
   });

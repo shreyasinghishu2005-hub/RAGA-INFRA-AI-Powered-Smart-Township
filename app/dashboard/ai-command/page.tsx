@@ -4,9 +4,8 @@ import { useIoTStream } from "@/components/dashboard/IoTStreamConsumer";
 import KPICard from "@/components/dashboard/KPICard";
 import AlertFeed, { Alert } from "@/components/dashboard/AlertFeed";
 import SensorStatusGrid from "@/components/dashboard/SensorStatusGrid";
-import { Zap, Droplets, Shield, Heart, Leaf, Wifi } from "lucide-react";
-import { useState, useEffect } from "react";
-import { randomUUID } from "crypto";
+import { Zap, Droplets, Shield, Heart, Leaf } from "lucide-react";
+import { useState } from "react";
 
 // Generate mock alerts from sensor data
 function generateMockAlerts(): Alert[] {

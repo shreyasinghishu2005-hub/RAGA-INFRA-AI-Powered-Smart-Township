@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
 
 export default async function DashboardIndexPage() {
-  const { sessionClaims } = auth();
+  const { sessionClaims } = await auth();
   const role = (sessionClaims?.metadata as Record<string, string> | undefined)?.role;
 
   const roleRoutes: Record<string, string> = {

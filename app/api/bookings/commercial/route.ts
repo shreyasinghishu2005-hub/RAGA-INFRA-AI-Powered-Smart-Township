@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { commercialBookingSchema } from "@/lib/validators/booking";
-import { randomUUID } from "crypto";
 
 const bookings: Record<string, unknown>[] = [];
+
+function generateRef(prefix: string): string {
+  return `${prefix}-${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -22,7 +25,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const referenceNo = `COM-${randomUUID().split("-")[0].toUpperCase()}`;
+    const referenceNo = generateRef("COM");
     bookings.push({
       ...result.data,
       type: "commercial",
@@ -31,7 +34,10 @@ export async function POST(req: NextRequest) {
       createdAt: new Date().toISOString(),
     });
 
-    return NextResponse.json({ referenceNo, message: "Commercial booking enquiry submitted" });
+    return NextResponse.json({
+      referenceNo,
+      message: "Commercial booking enquiry submitted",
+    });
   } catch {
     return NextResponse.json(
       { error: { code: "INTERNAL_ERROR", message: "Internal server error" } },

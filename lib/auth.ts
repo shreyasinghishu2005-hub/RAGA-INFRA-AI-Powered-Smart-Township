@@ -1,4 +1,3 @@
-import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
 export type Role =
@@ -14,7 +13,9 @@ export type Role =
   | "SECURITY_OFFICER"
   | "EMERGENCY_TEAM";
 
-export function getUserRole(sessionClaims: Record<string, unknown> | null): Role | null {
+export function getUserRole(
+  sessionClaims: Record<string, unknown> | null
+): Role | null {
   if (!sessionClaims) return null;
   const meta = sessionClaims.metadata as Record<string, unknown> | undefined;
   return (meta?.role as Role) ?? null;
@@ -34,7 +35,10 @@ export function requireRole(
   return null;
 }
 
-export function hasPermission(role: Role | null, allowedRoles: Role[]): boolean {
+export function hasPermission(
+  role: Role | null,
+  allowedRoles: Role[]
+): boolean {
   if (!role) return false;
   return allowedRoles.includes(role);
 }
