@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic";
 
 import { motion } from "framer-motion";
 import { Shield, Sun, Droplets, Wifi, Heart, TreePine, Car, Zap, Building2, ShoppingBag } from "lucide-react";
