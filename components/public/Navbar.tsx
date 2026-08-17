@@ -30,7 +30,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-brand-blue to-brand-cyan rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-white/10 border border-white/20 rounded-lg flex items-center justify-center">
               <Zap className="w-4 h-4 text-white" />
             </div>
             <span className="font-bold text-white text-sm sm:text-base">
@@ -47,7 +47,7 @@ export default function Navbar() {
                 className={cn(
                   "px-3 py-1.5 rounded-lg text-sm font-medium transition-colors",
                   pathname === link.href
-                    ? "bg-brand-blue/20 text-brand-cyan"
+                    ? "bg-white/10 text-white"
                     : "text-slate-300 hover:text-white hover:bg-white/5"
                 )}
               >
@@ -60,13 +60,13 @@ export default function Navbar() {
           <div className="hidden sm:flex items-center gap-2">
             <Link
               href="/booking/residential"
-              className="px-4 py-2 bg-brand-blue hover:bg-brand-blue/80 text-white rounded-lg text-sm font-medium transition-colors"
+              className="px-4 py-2 bg-white hover:bg-gray-200 text-black rounded-lg text-sm font-medium transition-colors"
             >
               Book Now
             </Link>
             <Link
               href="/dashboard"
-              className="px-4 py-2 border border-brand-cyan/40 text-brand-cyan hover:bg-brand-cyan/10 rounded-lg text-sm font-medium transition-colors"
+              className="px-4 py-2 border border-white/40 text-white hover:bg-white/10 rounded-lg text-sm font-medium transition-colors"
             >
               Dashboard
             </Link>
@@ -100,7 +100,7 @@ export default function Navbar() {
                   className={cn(
                     "block px-3 py-2 rounded-lg text-sm font-medium transition-colors",
                     pathname === link.href
-                      ? "bg-brand-blue/20 text-brand-cyan"
+                      ? "bg-white/10 text-white"
                       : "text-slate-300 hover:text-white hover:bg-white/5"
                   )}
                 >
@@ -111,14 +111,14 @@ export default function Navbar() {
                 <Link
                   href="/booking/residential"
                   onClick={() => setOpen(false)}
-                  className="flex-1 text-center px-4 py-2 bg-brand-blue text-white rounded-lg text-sm font-medium"
+                  className="flex-1 text-center px-4 py-2 bg-white text-black rounded-lg text-sm font-medium"
                 >
                   Book Now
                 </Link>
                 <Link
                   href="/dashboard"
                   onClick={() => setOpen(false)}
-                  className="flex-1 text-center px-4 py-2 border border-brand-cyan/40 text-brand-cyan rounded-lg text-sm font-medium"
+                  className="flex-1 text-center px-4 py-2 border border-white/40 text-white rounded-lg text-sm font-medium"
                 >
                   Dashboard
                 </Link>

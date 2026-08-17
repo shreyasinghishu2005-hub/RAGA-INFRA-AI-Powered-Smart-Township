@@ -39,7 +39,7 @@ export default function DashboardShell({ children }: { children: React.ReactNode
       )}>
         {/* Logo */}
         <div className="flex items-center gap-2 p-4 border-b border-white/10">
-          <div className="w-8 h-8 bg-gradient-to-br from-brand-blue to-brand-cyan rounded-lg flex items-center justify-center">
+          <div className="w-8 h-8 bg-white/10 border border-white/20 rounded-lg flex items-center justify-center">
             <Zap className="w-4 h-4 text-white" />
           </div>
           <div>
@@ -58,7 +58,7 @@ export default function DashboardShell({ children }: { children: React.ReactNode
               className={cn(
                 "flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors",
                 pathname === item.href
-                  ? "bg-brand-blue/20 text-brand-cyan border border-brand-blue/20"
+                  ? "bg-white/10 text-white border border-white/20"
                   : "text-slate-400 hover:text-white hover:bg-white/5"
               )}
             >
@@ -98,7 +98,7 @@ export default function DashboardShell({ children }: { children: React.ReactNode
           <div className="flex items-center gap-3">
             <button className="relative p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5">
               <Bell className="w-5 h-5" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full" />
+              <span className="absolute top-1 right-1 w-2 h-2 bg-white rounded-full" />
             </button>
             <UserButton afterSignOutUrl="/" />
           </div>

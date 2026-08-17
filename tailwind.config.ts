@@ -12,12 +12,17 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          navy: "#0a0f2e",
-          blue: "#1a56db",
-          cyan: "#06b6d4",
-          gold: "#f59e0b",
-          green: "#10b981",
+          navy: "#000000",
+          blue: "#ffffff",
+          cyan: "#a3a3a3",
+          gold: "#e5e5e5",
+          green: "#d4d4d4",
         },
+        glass: {
+          border: "rgba(255, 255, 255, 0.12)",
+          panel: "rgba(255, 255, 255, 0.05)",
+          hover: "rgba(255, 255, 255, 0.1)",
+        }
       },
       fontFamily: {
         sans: ["Inter", "sans-serif"],
