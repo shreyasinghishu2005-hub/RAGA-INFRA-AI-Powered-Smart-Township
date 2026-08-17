@@ -26,6 +26,10 @@ const nextConfig = {
       { protocol: "https", hostname: "unpkg.com" },
     ],
   },
+  env: {
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || "pk_test_your_clerk_publishable_key",
+    CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY || "sk_test_your_clerk_secret_key",
+  },
 };
 
 export default nextConfig;
